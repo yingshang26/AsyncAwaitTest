@@ -7,7 +7,13 @@ namespace AsyncAwaitTest
 {
     class Program
     {
-        static async void Main(string[] args)
+        static void Main(string[] args)
+        {
+            MakeBreakfast();
+            Console.Read();
+        }
+
+        private static async void MakeBreakfast()
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
@@ -27,7 +33,6 @@ namespace AsyncAwaitTest
             Console.WriteLine("Breakfast is ready!");
             watch.Stop();
             Console.WriteLine($"总共花费时间：{watch.ElapsedMilliseconds}");
-            Console.ReadLine();
         }
 
         private static Juice PourOJ()
@@ -78,7 +83,7 @@ namespace AsyncAwaitTest
         private static Egg FryEggs()
         {
             Console.WriteLine($"Making Eggs ");
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
             return new Egg();
         }
 
