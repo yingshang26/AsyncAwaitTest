@@ -7,17 +7,17 @@ namespace AsyncAwaitTest
 {
     class Program
     {
-        static async void Main(string[] args)
+        static void Main(string[] args)
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
             Coffee cup = PourCoffee();
             Console.WriteLine("coffee is ready");
-            Egg eggs = await FryEggAsync();
+            Egg eggs = FryEggs();
             Console.WriteLine("eggs are ready");
-            Bacon bacon = await FryBaconAsync();
+            Bacon bacon = FryBacon();
             Console.WriteLine("bacon is ready");
-            Toast toast = await ToastBreadAsync();
+            Toast toast = ToastBread();
             ApplyButter(toast);
             ApplyJam(toast);
             Console.WriteLine("toast is ready");
@@ -46,11 +46,6 @@ namespace AsyncAwaitTest
             Console.WriteLine("Applying Butter to Toast");
         }
 
-        private static Task<Toast> ToastBreadAsync()
-        {
-            return Task<Toast>.Factory.StartNew(ToastBread);
-        }
-
         private static Toast ToastBread()
         {
             Console.WriteLine($"Making Toast");
@@ -58,21 +53,11 @@ namespace AsyncAwaitTest
             return new Toast();
         }
 
-        private static Task<Bacon> FryBaconAsync()
-        {
-            return Task<Bacon>.Factory.StartNew(FryBacon);
-        }
-
         private static Bacon FryBacon()
         {
             Console.WriteLine($"Making Bacon");
             Thread.Sleep(200);
             return new Bacon();
-        }
-
-        private static Task<Egg> FryEggAsync()
-        {
-            return Task<Egg>.Factory.StartNew(FryEggs);
         }
 
         private static Egg FryEggs()
