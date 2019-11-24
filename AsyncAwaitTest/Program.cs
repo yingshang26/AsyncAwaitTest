@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AsyncAwaitTest
 {
@@ -22,16 +24,27 @@ namespace AsyncAwaitTest
             var eggTask = FryEggAsync();
             var baconTask = FryBaconAsync();
             var toastTask = MakeToastWithButterAndJamAsync();
+
+            var allTasks = new List<Task> { eggTask, baconTask, toastTask };
+            while(allTasks.Any())
+            {
+                Task finished = await Task.WhenAny(allTasks);
+                if(finished == eggTask)
+                {
+                    Console.WriteLine("eggs are ready");
+                }
+                else if (finished == baconTask)
+                {
+                    Console.WriteLine("bacon is ready");
+                }
+                else if (finished == toastTask)
+                {
+                    Console.WriteLine("toast is ready");
+                }
+
+                allTasks.Remove(finished);
+            }
      
-            Egg egg = await eggTask;
-            Console.WriteLine("eggs are ready");
-
-            Bacon bacon = await baconTask;
-            Console.WriteLine("bacon is ready");
-
-            Toast toast = await toastTask;
-            Console.WriteLine("toast is ready");
-
             Juice oj = PourOJ();
             Console.WriteLine("oj is ready");
 
